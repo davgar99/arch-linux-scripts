@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Don't allow users to run this script as root
 if ((EUID == 0)); then
     echo "This script should not be run as root. Please run it as a regular user."
     exit 1
