@@ -7,6 +7,7 @@ if ((EUID == 0)); then
 fi
 
 # Install packages for Nvidia hardware acceleration
+echo "Installing Nvidia VA-API driver"
 sudo pacman -Syu --needed libva-nvidia-driver
 
 # Sets environment variables for Nvidia hardware acceleration for VA-API, VDPAU, and CUDA

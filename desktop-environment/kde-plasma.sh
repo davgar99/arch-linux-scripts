@@ -11,9 +11,11 @@ echo "Installing KDE Plasma and essential applications"
 sudo pacman -Syu --needed plasma-meta sddm dolphin konsole kate ark
 
 # Warns if a different display manager is already enabled before SDDM takes over
-current_dm=$(basename "$(readlink -f /etc/systemd/system/display-manager.service 2> /dev/null)" 2> /dev/null)
-if [[ -n "$current_dm" && "$current_dm" != "sddm.service" ]]; then
-    echo "Note: $current_dm is currently enabled as the display manager, it will be replaced with SDDM."
+if [[ -e /etc/systemd/system/display-manager.service ]]; then
+    current_dm=$(basename "$(readlink -f /etc/systemd/system/display-manager.service)")
+    if [[ "$current_dm" != "sddm.service" ]]; then
+        echo "Note: $current_dm is currently enabled as the display manager, it will be replaced with SDDM."
+    fi
 fi
 
 # Enables the SDDM display manager so KDE Plasma starts automatically on boot
