@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Don't allow users to run this script as root
 if ((EUID == 0)); then
@@ -11,35 +12,35 @@ echo "If it's not enabled, please close the script and do that before running th
 read -n 1 -s -r -p "Press any key to continue..."
 printf "\n"
 
-# Installs Nvidia, Vulkan, and OpenCL packages
+# Installs NVIDIA, Vulkan, and OpenCL packages
 linux_kernel=$(uname -r)
 case "$linux_kernel" in
     *-arch*)
-        echo "Installing Nvidia drivers for Arch Linux kernel"
+        echo "Installing NVIDIA drivers for Arch Linux kernel"
         sudo pacman -Syu --needed nvidia-open nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader opencl-nvidia lib32-opencl-nvidia
         ;;
     *-lts*)
-        echo "Installing Nvidia drivers for Linux LTS kernel"
+        echo "Installing NVIDIA drivers for Linux LTS kernel"
         sudo pacman -Syu --needed nvidia-open-lts nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader opencl-nvidia lib32-opencl-nvidia
         ;;
     *-hardened*|*-zen*|*-cachyos*)
-        echo "Installing Nvidia drivers for Other Linux kernel: $linux_kernel"
+        echo "Installing NVIDIA drivers for other Linux kernel: $linux_kernel"
         sudo pacman -Syu --needed nvidia-open-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader opencl-nvidia lib32-opencl-nvidia
         ;;
     *)
-        echo "Installing Nvidia drivers for unknown kernel: $linux_kernel"
+        echo "Installing NVIDIA drivers for unknown kernel: $linux_kernel"
         sudo pacman -Syu --needed nvidia-open-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader opencl-nvidia lib32-opencl-nvidia
         ;;
 esac
 
-# Creates a conf file to enable suspend and resizable bar, and also disables Nvidia link.
-echo "Creating Nvidia modprobe file"
+# Creates a conf file to enable suspend and resizable bar, and also disables NVIDIA link.
+echo "Creating NVIDIA modprobe file"
 echo 'options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_EnableResizableBar=1 NVreg_NvLinkDisable=1 NVreg_UseKernelSuspendNotifiers=1' | sudo tee /etc/modprobe.d/nvidia-kernel-parameters.conf > /dev/null
 
 # Increases maximum shader cache size to reduce stutters
-echo "Creating Nvidia shader cache configuration file"
+echo "Creating NVIDIA shader cache configuration file"
 mkdir -p ~/.config/environment.d
 cat << 'EOF' > ~/.config/environment.d/nvidia-shader-cache.conf
-# Increase Nvidia's shader cache size to 12GB
+# Increase NVIDIA's shader cache size to 12GB
 __GL_SHADER_DISK_CACHE_SIZE=12000000000
 EOF
