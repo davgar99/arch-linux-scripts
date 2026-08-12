@@ -7,19 +7,19 @@ if ((EUID == 0)); then
     exit 1
 fi
 
-# Install packages for Nvidia hardware acceleration
-echo "Installing Nvidia VA-API driver"
+# Install packages for NVIDIA hardware acceleration
+echo "Installing NVIDIA VA-API driver"
 sudo pacman -Syu --needed libva-nvidia-driver
 
-# Sets environment variables for Nvidia hardware acceleration for VA-API, VDPAU, and CUDA
-# Essentially improves video playback and hardware acceleration for Nvidia GPUs
-if grep -q "Nvidia hardware acceleration environment variables" /etc/environment 2> /dev/null; then
-    echo "Nvidia hardware acceleration environment variables are already set, skipping."
+# Sets environment variables for NVIDIA hardware acceleration for VA-API, VDPAU, and CUDA
+# Essentially improves video playback and hardware acceleration for NVIDIA GPUs
+if grep -q "NVIDIA hardware acceleration environment variables" /etc/environment 2> /dev/null; then
+    echo "NVIDIA hardware acceleration environment variables are already set, skipping."
 else
-    echo "Setting environment variables for Nvidia hardware acceleration"
+    echo "Setting environment variables for NVIDIA hardware acceleration"
     cat << 'EOF' | sudo tee -a /etc/environment > /dev/null
 
-# Nvidia hardware acceleration environment variables
+# NVIDIA hardware acceleration environment variables
 MOZ_DISABLE_RDD_SANDBOX=1
 LIBVA_DRIVER_NAME=nvidia
 VDPAU_DRIVER=nvidia
