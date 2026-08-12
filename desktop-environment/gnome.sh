@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Don't allow users to run this script as root
 if ((EUID == 0)); then
@@ -19,9 +20,10 @@ if [[ -e /etc/systemd/system/display-manager.service ]]; then
     fi
 fi
 
-# Enables the GDM display manager so GNOME starts automatically on boot
+# Enables the GDM display manager so GNOME starts automatically on boot.
+# --force replaces an existing display-manager.service symlink when switching DMs.
 echo "Enabling GDM display manager"
-sudo systemctl enable gdm.service
+sudo systemctl enable --force gdm.service
 
 # Enables NetworkManager so networking works out of the box in GNOME
 echo "Enabling NetworkManager"
