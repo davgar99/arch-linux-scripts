@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Don't allow users to run this script as root
 if ((EUID == 0)); then
@@ -18,9 +19,10 @@ if [[ -e /etc/systemd/system/display-manager.service ]]; then
     fi
 fi
 
-# Enables the SDDM display manager so KDE Plasma starts automatically on boot
+# Enables the SDDM display manager so KDE Plasma starts automatically on boot.
+# --force replaces an existing display-manager.service symlink when switching DMs.
 echo "Enabling SDDM display manager"
-sudo systemctl enable sddm.service
+sudo systemctl enable --force sddm.service
 
 # Enables NetworkManager so networking works out of the box in Plasma
 echo "Enabling NetworkManager"

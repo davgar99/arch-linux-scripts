@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Don't allow users to run this script as root
 if ((EUID == 0)); then
