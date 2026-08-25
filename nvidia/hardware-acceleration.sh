@@ -13,7 +13,7 @@ sudo pacman -Syu --needed libva-nvidia-driver
 
 # Sets environment variables for NVIDIA hardware acceleration for VA-API, VDPAU, and CUDA
 # Essentially improves video playback and hardware acceleration for NVIDIA GPUs
-if grep -q "NVIDIA hardware acceleration environment variables" /etc/environment 2> /dev/null; then
+if grep -Eqi "# (Nvidia|NVIDIA) hardware acceleration environment variables" /etc/environment 2> /dev/null; then
     echo "NVIDIA hardware acceleration environment variables are already set, skipping."
 else
     echo "Setting environment variables for NVIDIA hardware acceleration"
